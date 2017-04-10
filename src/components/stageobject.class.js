@@ -1,4 +1,4 @@
-import Point from '../utils/point.class.js';
+import Vector2D from './vector2d.js';
 
 export default class StageObject {
   constructor({
@@ -40,23 +40,23 @@ export default class StageObject {
   }
 
   get topLeft() {
-   return new Point(this.left, this.top);
+   return new Vector2D(this.left, this.top);
   }
 
   get topRight() {
-   return new Point(this.right, this.top);
+   return new Vector2D(this.right, this.top);
   }
 
   get bottomLeft() {
-   return new Point(this.left, this.bottom);
+   return new Vector2D(this.left, this.bottom);
   }
 
   get bottomRight() {
-   return new Point(this.right, this.bottom);
+   return new Vector2D(this.right, this.bottom);
   }
 
   _hitTest(ev, stage) {
-    let p = new Point(ev.clientX, ev.clientY);
+    let p = new Vector2D(ev.clientX, ev.clientY);
     p = stage.transformPoint(p);
 
     if(p.Y > this.top && p.Y < this.bottom &&

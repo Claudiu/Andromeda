@@ -1,4 +1,4 @@
-import Point from '../utils/point.class.js';
+import Vector2D from './vector2d.js';
 import {Renderer} from './renderer.class.js';
 
 /**
@@ -74,7 +74,7 @@ export default class Stage {
             }
 
             this.trigger(`object:${ev}`, {
-              point: this.transformPoint(new Point(e.clientX, e.clientY)),
+              point: this.transformPoint(new Vector2D(e.clientX, e.clientY)),
               obj: obj,
               originalEvent: e,
             });

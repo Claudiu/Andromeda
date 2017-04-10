@@ -12,7 +12,7 @@ module.exports = {
         publicPath: '/assets',
         libraryTarget: 'umd',
         umdNamedDefine: true,
-        library: 'Draw',
+        library: 'Andromeda',
     },
     module: {
       rules: [
