@@ -1,3 +1,5 @@
+import {clamp} from '../utils/math.js';
+
 /** Class prepreseting a point in 2D space. */
 export default class Vector2D {
   /**
@@ -176,9 +178,7 @@ export default class Vector2D {
       let lenProduct = this.magnitude() * other.magnitude();
       let f = this.dotProduct(other) / lenProduct;
 
-      if(f < -1.0) f = -1.0;
-      if(f > 1.0) f = 1.0;
-
+      f = clamp(f, -1.0, 1.0);
       return Math.acos(f);
   }
 
