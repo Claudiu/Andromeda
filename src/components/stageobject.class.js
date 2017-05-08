@@ -10,7 +10,7 @@ export default class StageObject {
     stroke = 1,
     strokeColor = '#3d3d3d',
     fill = '#CCC',
-    canvas = null,
+    stage = null,
   } = {}) {
     this.internal = internal;
     this.left = left;
@@ -20,7 +20,7 @@ export default class StageObject {
     this.stroke = stroke;
     this.strokeColor = strokeColor;
     this.fill = fill;
-    this.canvas = canvas;
+    this.stage = stage;
   }
 
   set(data, rerender = false) {

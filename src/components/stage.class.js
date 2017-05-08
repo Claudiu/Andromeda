@@ -1,5 +1,6 @@
 import Vector2D from './vector2d.js';
 import {Renderer} from './renderer.class.js';
+import Matrix from './matrix.js';
 
 /**
  * Class represeting a drawable canvas stage.
@@ -17,7 +18,7 @@ export default class Stage {
     this.objects = [];
     this.pan = {X: 0, Y: 0};
     this.renderer = new Renderer();
-
+    this.currentTransform = new Matrix();
     this.updateSize();
     this._initEventListeners();
   }
@@ -28,6 +29,16 @@ export default class Stage {
 
   get height() {
     return this.node.getAttribute('height');
+  }
+
+  transform(val = new Matrix()) {
+    let matrix = val.matrix;
+    this.currentTransform = val;
+
+    this.context.setTransform(
+      matrix[0], matrix[3], matrix[1],
+      matrix[4], matrix[2], matrix[5]
+    );
   }
 
   _pixelRatio() {
@@ -61,7 +72,7 @@ export default class Stage {
 
   add(obj) {
     this.trigger('object:added');
-    obj.canvas = this;
+    obj.stage = this;
     this.objects.unshift(obj);
   }
 
@@ -112,15 +123,21 @@ export default class Stage {
     return this;
   }
 
+  forEach(cb) {
+    for (let obj of this.objects) {
+      cb(obj);
+    }
+  }
+
   render() {
     this._clearFrame();
     this.trigger('before:render');
 
-    this.context.setTransform(1, 0, 0, 1, 0, 0);
-    this.context.translate(this.pan.X, this.pan.Y);
-    for (let obj of this.objects) {
+    this.currentTransform = this.transform();
+    // this.context.translate(this.pan.X, this.pan.Y);
+    this.forEach((obj) => {
       obj.draw(this.context);
-    }
+    });
 
     this.trigger('after:render');
   }

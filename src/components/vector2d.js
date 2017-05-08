@@ -1,4 +1,5 @@
-import {clamp} from '../utils/math.js';
+import Matrix from './matrix.js';
+import {clamp, lerp} from '../utils/math.js';
 
 /** Class prepreseting a point in 2D space. */
 export default class Vector2D {
@@ -10,6 +11,13 @@ export default class Vector2D {
   constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
+  }
+
+  transform(tm = new Matrix()) {
+    return new Vector2D(
+      tm.matrix[0] * this.x + tm.matrix[2] * this.y + tm.matrix[4],
+      tm.matrix[1] * this.x + tm.matrix[3] * this.y + tm.matrix[5]
+    );
   }
 
   /**
@@ -24,6 +32,13 @@ export default class Vector2D {
     }
 
     return new Vector2D(this.x + p, this.y + p);
+  }
+
+  lerp(end = new Vector2D(), t = 0.5) {
+    let x = lerp(this.x, end.x, t);
+    let y = lerp(this.y, end.y, t);
+
+    return new Vector2D(x, y);
   }
 
   multiply(p) {
@@ -207,6 +222,12 @@ export default class Vector2D {
   */
   clone() {
     return new Vector2D(this.x, this.y);
+  }
+
+  copy(vec = new Vector2D()) {
+    this.x = vec.x;
+    this.y = vec.y;
+    return this;
   }
 
   findNearest(arrayOfVector2Ds = []) {

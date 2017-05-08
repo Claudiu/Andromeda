@@ -49,9 +49,13 @@ export default class Box extends StageObject {
 
   draw(context) {
     super.draw(context);
-    this.imagine(context);
 
+    context.save();
+
+    this.imagine(context);
     context.stroke();
     context.fill();
+
+    context.restore();
   }
 }
